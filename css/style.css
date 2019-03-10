@@ -30,42 +30,48 @@ body {
 }
 
 h1 {
-    font-size: 48px;
+    font-size: 48px;    
 }
 
 #painel {
-    width: 620px;
+    width: 680px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    width: calc(33.33% - 20px);
-    margin: 10px;
+    width: calc(33.33% - 40px);
+    margin: 0;
 }
 
-#painel #reiniciar {
+button {
     background: #3d2963;
-    border:none;
+    border: none;
     border-radius: 8px;
     cursor: pointer;
     color: #9d93b0;
     font-size: 22px;
     padding: 8px 30px;
+    transform: scale(1);
+    transition: transform .2s;
+}
+
+button:hover {
+    color: #FFFFFF;
+}
+
+button:active {
+    transform: scale(0.97);
+    transition: transform .2s;
 }
 
 #painel #pontuacao {
     margin: 0;
     padding: 0;
-}
-
-#painel #pontuacao ul {
-    list-style: none;
     text-align: center;
-    width: 100%;
 }
 
-#painel #pontuacao ul li {
-
+#painel #tempo {
+    font-size: 40px;
 }
 
 #tabuleiro {
@@ -111,9 +117,9 @@ h1 {
     padding: 20px;
     position: absolute;
     text-align: center;
+    line-height: 80px;
     border-radius: 8px;
     backface-visibility: hidden;
-    border: 8px solid transparent;
 }
 
 .front {  
@@ -128,6 +134,44 @@ h1 {
     color: #9D93B0;
     font-size: 54px;
     color: #FFF;
-    border: 8px solid #9D93B0;
     background: #3d2963;
+}
+
+#modal {
+    background-color: rgba(0,0,0,.8);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    text-align: center;
+}
+.modal_off {
+    display: none;
+}
+
+.popup {
+    background: #00B2A1;
+    width: 50%;
+    display: block;
+    border-radius: 20px;
+    padding: 30px 30px 50px 30px; 
+    color: #FFF;
+    font-size: 20px;
+    margin: auto;
+    margin-top: calc(10%);
+}
+
+.popup h1 {
+    border-bottom: 1px dotted #FFFFFF;
+    padding-bottom: 10px;
+}
+
+.popup p {
+    margin: 0 0 5px 0;
+}
+
+.popup button {
+    margin-top: 30px;
 }

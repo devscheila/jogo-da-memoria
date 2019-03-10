@@ -58,24 +58,28 @@ let jogada_1, jogada_2, movimentos, acertos;
 
 movimentos = 0;
 acertos = 0;
+bloqueia = false;
+ini = undefined
 
 function joga(p) {
+    console.log(bloqueia);
+    if (bloqueia) { return; }
+    if (ini === undefined) { ini = new Date(); }
     if (jogada_1 === undefined) {
         jogada_1 = p;
         mostraCarta(p);
     } else if (jogada_2 === undefined ) {
         jogada_2 = p;
+        bloqueia = true;
         mostraCarta(p);
-        comparaCartas(jogada_1, jogada_2);
-        
+        comparaCartas(jogada_1, jogada_2);     
     }
-    // bloqueia = false;
 }
 
 function mostraCarta(p) {
     let carta;
     carta = document.getElementById(p);
-    carta.classList.toggle('flip');
+    carta.classList.add('flip');
     front = carta.getElementsByClassName("front")[0];
     front.innerHTML = icones[p];
 }
@@ -94,17 +98,20 @@ function comparaCartas(j_1, j_2) {
         // TODO bloquear ação nas cartas
         carta_1.removeEventListener("click", function (evt) { evt.preventDefault(); });
         carta_2.removeEventListener("click", function (evt) { evt.preventDefault(); });
+        bloqueia = false;
     } else {
         console.log('erroouuuu');
         setTimeout(() => {
             carta_1 = document.getElementById(j_1);
             carta_2 = document.getElementById(j_2);
-            carta_1.classList.toggle('flip');
-            carta_2.classList.toggle('flip');
+            carta_1.classList.remove('flip');
+            carta_2.classList.remove('flip');
+            bloqueia = false;
         }, 1500);
     }
     if (acertos === 8) {
         alert("Você ganhou!");
+        clearInterval(contaTempo);
     }
     jogada_1 = jogada_2 = undefined;
 }
@@ -133,10 +140,11 @@ function shuffle(array) {
 // AÇÃO BOTÃO NOVO JOGO
 document.getElementById('reiniciar').addEventListener('click', function(e) {
     for (var l = 0; l < cartas.length; l++) { 
-        cartas[l].classList.remove("ativo"); 
         cartas[l].classList.remove("pares"); 
+        cartas[l].classList.remove('flip');
     } 
     icones = shuffle(icones);
+    console.log(icones);
     jogada_1 = jogada_2 = undefined;
     movimentos = acertos = 0;
 });
@@ -147,3 +155,22 @@ for (let i = 0; i < cartas.length; i++) {
         joga(i);
     });
 }
+
+var contaTempo = setInterval(myTimer, 1000);
+
+function myTimer() {
+    if (ini) {
+        var d = new Date();
+        var t = new Date(d - ini)
+
+        var hour = t.getUTCHours();
+            hour = ("0" + hour).slice(-2);
+        var min = t.getUTCMinutes();
+            min = ("0" + min).slice(-2);
+        var sec = t.getUTCSeconds();
+            sec = ("0" + sec).slice(-2);
+
+        document.getElementById("tempo").innerHTML = hour + ":" + min + ":" + sec;
+    }
+}
+
