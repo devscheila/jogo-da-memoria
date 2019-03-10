@@ -74,13 +74,10 @@ function shuffle(array) {
 icones = shuffle(icones);
 
 let clique = document.getElementsByClassName('carta');
+let jogada_1, jogada_2, movimentos, acertos;
 
-for (let i = 0; i < clique.length; i++) {
-    clique[i].addEventListener('click', function(e) {
-        console.log(e);
-        joga(e.target.id);
-    });
-}
+movimentos = 0;
+acertos = 0;
 
 document.getElementById('reiniciar').addEventListener('click', function(e) {
     for (var l = 0; l < clique.length; l++) { 
@@ -92,9 +89,18 @@ document.getElementById('reiniciar').addEventListener('click', function(e) {
     movimentos = acertos = 0;
 });
 
-let jogada_1, jogada_2, movimentos, acertos;
-movimentos = 0;
-acertos = 0;
+/*
+for (let i = 0; i < clique.length; i++) {
+    clique[i].addEventListener('click', function(e) {
+        console.log(clique[i]);
+        joga(e.target.id);
+    });
+}
+*/
+for (let i = 0; i < clique.length; i++) {
+    clique[i].addEventListener('click', joga(i))
+}
+
 
 function joga(p) {
     if (jogada_1 === undefined) {
@@ -109,9 +115,9 @@ function joga(p) {
 
 function mostraCarta(p) {
     let carta;
-    console.log(p);
-    //carta = document.getElementById(p).getElementsByClassName("back")[0];
-    //carta.innerHTML = icones[p];
+    carta = document.getElementById(p).getElementsByClassName("back")[0];
+    carta.innerHTML = icones[p];
+    carta.classList.toggle('flip');
 }
 
 function comparaCartas(j_1, j_2) {
@@ -138,20 +144,6 @@ function comparaCartas(j_1, j_2) {
     }
     jogada_1 = jogada_2 = undefined;
 }
-
-function reiniciar(icones) {
-    //jogada_1 = jogada_2 = undefined;
-    //movimentos = acertos = 0;
-    let cartas = document.getElementsByClassName('carta');
-    for (let i = 0; i < cartas.length; i++) {
-        cartas[i].classList.remove("ativo");
-    }
-    console.log("clique");
-    shuffle(icones);
-
-}
-
-
 
 /*function sleep(milliseconds) {
   var start = new Date().getTime();

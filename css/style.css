@@ -72,14 +72,13 @@ h1 {
     border-radius: 8px;
     margin: 10px;
     position: relative;
-    box-shadow: 2px 2px 2px rgba(0,0,0,.3);
     cursor: pointer;
     font-size: 54px;
     color: #FFF;
     transform: scale(1);
     transform-style: preserve-3d;
     transition: transform .5s;
-    background: #3d2963;
+    background: #00B2A1;
 }
 
 .carta:active {
@@ -105,7 +104,7 @@ h1 {
 }
 
 .back {
-    background: #000;
+    background: #3d2963;
 }
 
 .pares {
