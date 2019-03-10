@@ -1,0 +1,91 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #57407C;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.global {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #FFFFFF;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+.painel {
+    text-align: left;
+    width: 620px;
+}
+
+.painel .reiniciar {
+    background: #3d2963;
+    border:none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #9d93b0;
+    font-size: 22px;
+    padding: 8px 30px;
+    float: left;
+}
+
+.painel .pontuacao {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.tabuleiro {
+    width: 680px;
+    height: 680px;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carta {
+    height: 130px;
+    width: 130px;
+    background: #3d2963;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0px;
+}
+
+.ativo {
+    background: #00B2A1;
+    font-size: 54px;
+    color: #FFF;
+}
+
+.pares {
+    color: #9D93B0;
+    font-size: 54px;
+    border: 8px solid #9D93B0;
+}
