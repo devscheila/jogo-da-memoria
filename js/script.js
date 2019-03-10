@@ -77,6 +77,7 @@ console.log(icones);
 let clique = document.getElementById('tabuleiro');
 clique.addEventListener('click', function(e) {
     console.log(e.target.id);
+    joga(e.target.id);
 });
 
 let jogada_1, jogada_2, movimentos, acertos;
@@ -84,25 +85,19 @@ movimentos = 0;
 acertos = 0;
 
 function joga(p) {
-    console.log("log 1");
     if (jogada_1 === undefined) {
-        console.log("log 2");
         jogada_1 = p;
         mostraCarta(p);
-        console.log("log 3");
     } else if (jogada_2 === undefined ) {
-        console.log("log 4");
         jogada_2 = p;
         mostraCarta(p);
-        console.log("log 5");
-        console.log(jogada_1, jogada_2);
         comparaCartas(jogada_1, jogada_2);
     }
 }
 
 function mostraCarta(p) {
     let carta;
-    carta = document.getElementById('carta_' + p);
+    carta = document.getElementById(p);
     carta.classList.add("ativo");
     carta.innerHTML = icones[p];
     console.log(carta);
@@ -117,19 +112,19 @@ function comparaCartas(j_1, j_2) {
     if (icones[j_1] === icones[j_2]) {
         acertos++;
         console.log('pares');
-        carta_1 = document.getElementById('carta_' + j_1);
+        carta_1 = document.getElementById(j_1);
         carta_1.classList.remove("ativo");
         carta_1.classList.add("pares");
-        carta_2 = document.getElementById('carta_' + j_2);
+        carta_2 = document.getElementById(j_2);
         carta_2.classList.remove("ativo");
         carta_2.classList.add("pares");
     } else {
         console.log('erro');
         console.log("log carta 1");
-        carta_1 = document.getElementById('carta_' + j_1);
+        carta_1 = document.getElementById(j_1);
         carta_1.classList.remove("ativo");
         console.log("log carta 2");
-        carta_2 = document.getElementById('carta_' + j_2);
+        carta_2 = document.getElementById(j_2);
         carta_2.classList.remove("ativo");
     }
     if (acertos === 8) {

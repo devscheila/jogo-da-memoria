@@ -21,7 +21,7 @@ body {
     font-family: 'Ubuntu', sans-serif;
 }
 
-.global {
+#global {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,12 +33,12 @@ h1 {
     font-size: 48px;
 }
 
-.painel {
+#.painel {
     text-align: left;
     width: 620px;
 }
 
-.painel .reiniciar {
+#painel .reiniciar {
     background: #3d2963;
     border:none;
     border-radius: 8px;
@@ -49,14 +49,14 @@ h1 {
     float: left;
 }
 
-.painel .pontuacao {
+#painel .pontuacao {
     margin: 0;
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
 }
 
-.tabuleiro {
+#tabuleiro {
     width: 680px;
     height: 680px;
     padding: 30px;
