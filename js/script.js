@@ -74,6 +74,11 @@ function shuffle(array) {
 icones = shuffle(icones);
 console.log(icones);
 
+let clique = document.getElementById('tabuleiro');
+clique.addEventListener('click', function(e) {
+    console.log(e.target.id);
+});
+
 let jogada_1, jogada_2, movimentos, acertos;
 movimentos = 0;
 acertos = 0;
