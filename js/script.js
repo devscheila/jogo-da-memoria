@@ -50,6 +50,65 @@ let icones = [ '<i class="fas fa-dove"></i>', '<i class="fas fa-dove"></i>',
     '<i class="fas fa-umbrella"></i>', '<i class="fas fa-umbrella"></i>',
     '<i class="fas fa-tooth"></i>', '<i class="fas fa-tooth"></i>'];
 
+icones = shuffle(icones);
+console.log(icones);
+
+const cartas = document.getElementsByClassName('carta');
+let jogada_1, jogada_2, movimentos, acertos;
+
+movimentos = 0;
+acertos = 0;
+
+function joga(p) {
+    if (jogada_1 === undefined) {
+        jogada_1 = p;
+        mostraCarta(p);
+    } else if (jogada_2 === undefined ) {
+        jogada_2 = p;
+        mostraCarta(p);
+        comparaCartas(jogada_1, jogada_2);
+        
+    }
+    // bloqueia = false;
+}
+
+function mostraCarta(p) {
+    let carta;
+    carta = document.getElementById(p);
+    carta.classList.toggle('flip');
+    front = carta.getElementsByClassName("front")[0];
+    front.innerHTML = icones[p];
+}
+
+function comparaCartas(j_1, j_2) {
+    let carta_1, carta_2;
+    movimentos++;
+    spanMovimentos = document.getElementById('movimentos');
+    spanMovimentos.innerHTML = movimentos;
+    if (icones[j_1] === icones[j_2]) {
+        acertos++;
+        carta_1 = document.getElementById(j_1);
+        carta_2 = document.getElementById(j_2);
+        carta_1.classList.add("pares");
+        carta_2.classList.add("pares");
+        // TODO bloquear ação nas cartas
+        carta_1.removeEventListener("click", function (evt) { evt.preventDefault(); });
+        carta_2.removeEventListener("click", function (evt) { evt.preventDefault(); });
+    } else {
+        console.log('erroouuuu');
+        setTimeout(() => {
+            carta_1 = document.getElementById(j_1);
+            carta_2 = document.getElementById(j_2);
+            carta_1.classList.toggle('flip');
+            carta_2.classList.toggle('flip');
+        }, 1500);
+    }
+    if (acertos === 8) {
+        alert("Você ganhou!");
+    }
+    jogada_1 = jogada_2 = undefined;
+}
+
 /* Embaralhar cartas - fonte: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array*/
 
 function shuffle(array) {
@@ -71,94 +130,20 @@ function shuffle(array) {
   return array;
 }
 
-icones = shuffle(icones);
-
-let clique = document.getElementsByClassName('carta');
-let jogada_1, jogada_2, movimentos, acertos;
-
-movimentos = 0;
-acertos = 0;
-
+// AÇÃO BOTÃO NOVO JOGO
 document.getElementById('reiniciar').addEventListener('click', function(e) {
-    for (var l = 0; l < clique.length; l++) { 
-        clique[l].classList.remove("ativo"); 
-        clique[l].classList.remove("pares"); 
+    for (var l = 0; l < cartas.length; l++) { 
+        cartas[l].classList.remove("ativo"); 
+        cartas[l].classList.remove("pares"); 
     } 
     icones = shuffle(icones);
     jogada_1 = jogada_2 = undefined;
     movimentos = acertos = 0;
 });
 
-/*
-for (let i = 0; i < clique.length; i++) {
-    clique[i].addEventListener('click', function(e) {
-        console.log(clique[i]);
-        joga(e.target.id);
+// AÇÃO DE CLICAR NA CARTA
+for (let i = 0; i < cartas.length; i++) {
+    cartas[i].addEventListener('click', function(e) {
+        joga(i);
     });
 }
-*/
-for (let i = 0; i < clique.length; i++) {
-    clique[i].addEventListener('click', joga(i))
-}
-
-
-function joga(p) {
-    if (jogada_1 === undefined) {
-        jogada_1 = p;
-        mostraCarta(p);
-    } else if (jogada_2 === undefined ) {
-        jogada_2 = p;
-        mostraCarta(p);
-        comparaCartas(jogada_1, jogada_2);
-    }
-}
-
-function mostraCarta(p) {
-    let carta;
-    carta = document.getElementById(p).getElementsByClassName("back")[0];
-    carta.innerHTML = icones[p];
-    carta.classList.toggle('flip');
-}
-
-function comparaCartas(j_1, j_2) {
-    let carta_1, carta_2;
-    movimentos++;
-    spanMovimentos = document.getElementById('movimentos');
-    spanMovimentos.innerHTML = movimentos;
-    if (icones[j_1] === icones[j_2]) {
-        acertos++;
-        carta_1 = document.getElementById(j_1);
-        carta_1.classList.remove("ativo");
-        carta_1.classList.add("pares");
-        carta_2 = document.getElementById(j_2);
-        carta_2.classList.remove("ativo");
-        carta_2.classList.add("pares");
-    } else {
-        carta_1 = document.getElementById(j_1);
-        carta_1.classList.remove("ativo");
-        carta_2 = document.getElementById(j_2);
-        carta_2.classList.remove("ativo");
-    }
-    if (acertos === 8) {
-        alert("Você ganhou!");
-    }
-    jogada_1 = jogada_2 = undefined;
-}
-
-/*function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
-*/
-
-const cards = document.querySelectorAll('.carta');
-
-function flipCard() {
-  this.classList.toggle('flip');
-}
-
-cards.forEach(card => card.addEventListener('click', flipCard));

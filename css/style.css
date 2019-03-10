@@ -34,8 +34,13 @@ h1 {
 }
 
 #painel {
-    text-align: left;
     width: 620px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    width: calc(33.33% - 20px);
+    margin: 10px;
 }
 
 #painel #reiniciar {
@@ -46,22 +51,32 @@ h1 {
     color: #9d93b0;
     font-size: 22px;
     padding: 8px 30px;
-    float: left;
 }
 
-#painel .pontuacao {
+#painel #pontuacao {
     margin: 0;
     padding: 0;
-    display: inline-block;
-    margin: 0 5px 0 0;
+}
+
+#painel #pontuacao ul {
+    list-style: none;
+    text-align: center;
+    width: 100%;
+}
+
+#painel #pontuacao ul li {
+
 }
 
 #tabuleiro {
     width: 680px;
     height: 680px;
+    margin: auto;
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     list-style: none;
     perspective: 1000px;
 }
@@ -95,8 +110,10 @@ h1 {
     height: 100%;
     padding: 20px;
     position: absolute;
+    text-align: center;
     border-radius: 8px;
     backface-visibility: hidden;
+    border: 8px solid transparent;
 }
 
 .front {  
@@ -110,5 +127,7 @@ h1 {
 .pares {
     color: #9D93B0;
     font-size: 54px;
+    color: #FFF;
     border: 8px solid #9D93B0;
+    background: #3d2963;
 }
