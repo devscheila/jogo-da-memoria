@@ -72,12 +72,24 @@ function shuffle(array) {
 }
 
 icones = shuffle(icones);
-console.log(icones);
 
-let clique = document.getElementById('tabuleiro');
-clique.addEventListener('click', function(e) {
-    console.log(e.target.id);
-    joga(e.target.id);
+let clique = document.getElementsByClassName('carta');
+
+for (let i = 0; i < clique.length; i++) {
+    clique[i].addEventListener('click', function(e) {
+        console.log(e);
+        joga(e.target.id);
+    });
+}
+
+document.getElementById('reiniciar').addEventListener('click', function(e) {
+    for (var l = 0; l < clique.length; l++) { 
+        clique[l].classList.remove("ativo"); 
+        clique[l].classList.remove("pares"); 
+    } 
+    icones = shuffle(icones);
+    jogada_1 = jogada_2 = undefined;
+    movimentos = acertos = 0;
 });
 
 let jogada_1, jogada_2, movimentos, acertos;
@@ -97,21 +109,18 @@ function joga(p) {
 
 function mostraCarta(p) {
     let carta;
-    carta = document.getElementById(p);
-    carta.classList.add("ativo");
-    carta.innerHTML = icones[p];
-    console.log(carta);
+    console.log(p);
+    //carta = document.getElementById(p).getElementsByClassName("back")[0];
+    //carta.innerHTML = icones[p];
 }
 
 function comparaCartas(j_1, j_2) {
     let carta_1, carta_2;
-    console.log(j_1 + " " + j_2);
     movimentos++;
     spanMovimentos = document.getElementById('movimentos');
     spanMovimentos.innerHTML = movimentos;
     if (icones[j_1] === icones[j_2]) {
         acertos++;
-        console.log('pares');
         carta_1 = document.getElementById(j_1);
         carta_1.classList.remove("ativo");
         carta_1.classList.add("pares");
@@ -119,11 +128,8 @@ function comparaCartas(j_1, j_2) {
         carta_2.classList.remove("ativo");
         carta_2.classList.add("pares");
     } else {
-        console.log('erro');
-        console.log("log carta 1");
         carta_1 = document.getElementById(j_1);
         carta_1.classList.remove("ativo");
-        console.log("log carta 2");
         carta_2 = document.getElementById(j_2);
         carta_2.classList.remove("ativo");
     }
@@ -132,6 +138,19 @@ function comparaCartas(j_1, j_2) {
     }
     jogada_1 = jogada_2 = undefined;
 }
+
+function reiniciar(icones) {
+    //jogada_1 = jogada_2 = undefined;
+    //movimentos = acertos = 0;
+    let cartas = document.getElementsByClassName('carta');
+    for (let i = 0; i < cartas.length; i++) {
+        cartas[i].classList.remove("ativo");
+    }
+    console.log("clique");
+    shuffle(icones);
+
+}
+
 
 
 /*function sleep(milliseconds) {
@@ -143,3 +162,11 @@ function comparaCartas(j_1, j_2) {
   }
 }
 */
+
+const cards = document.querySelectorAll('.carta');
+
+function flipCard() {
+  this.classList.toggle('flip');
+}
+
+cards.forEach(card => card.addEventListener('click', flipCard));
