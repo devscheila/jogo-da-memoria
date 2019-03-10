@@ -147,6 +147,11 @@ document.getElementById('reiniciar').addEventListener('click', function(e) {
     console.log(icones);
     jogada_1 = jogada_2 = undefined;
     movimentos = acertos = 0;
+    var contaTempo = setInterval(myTimer, 1000);
+    document.getElementById("tempo").innerHTML = '00:00:00';
+    ini = undefined;
+    spanMovimentos = document.getElementById('movimentos');
+    spanMovimentos.innerHTML = movimentos;
 });
 
 // AÇÃO DE CLICAR NA CARTA
