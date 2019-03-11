@@ -17,7 +17,7 @@ body {
 }
 
 body {
-    background: #57407C;
+    background: #57407c;
     font-family: 'Ubuntu', sans-serif;
 }
 
@@ -26,11 +26,11 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 h1 {
-    font-size: 48px;    
+    font-size: 48px;
 }
 
 #painel {
@@ -52,16 +52,16 @@ button {
     font-size: 22px;
     padding: 8px 30px;
     transform: scale(1);
-    transition: transform .2s;
+    transition: transform 0.2s;
 }
 
 button:hover {
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 button:active {
     transform: scale(0.97);
-    transition: transform .2s;
+    transition: transform 0.2s;
 }
 
 #painel #pontuacao {
@@ -95,16 +95,16 @@ button:active {
     position: relative;
     cursor: pointer;
     font-size: 54px;
-    color: #FFF;
+    color: #ffffff;
     transform: scale(1);
     transform-style: preserve-3d;
-    transition: transform .5s;
-    background: #00B2A1;
+    transition: transform 0.5s;
+    background: #00b2a1;
 }
 
 .carta:active {
    transform: scale(0.97);
-   transition: transform .2s;
+   transition: transform 0.2s;
 }
 
 .carta.flip {
@@ -122,7 +122,7 @@ button:active {
     backface-visibility: hidden;
 }
 
-.front {  
+.front {
     transform: rotateY(180deg);
 }
 
@@ -131,14 +131,14 @@ button:active {
 }
 
 .pares {
-    color: #9D93B0;
+    color: #9d93b0;
     font-size: 54px;
-    color: #FFF;
+    color: #ffffff;
     background: #3d2963;
 }
 
 #modal {
-    background-color: rgba(0,0,0,.8);
+    background-color: rgba(0,0,0,0.8);
     width: 100%;
     height: 100%;
     position: absolute;
@@ -152,7 +152,7 @@ button:active {
 }
 
 .popup {
-    background-color: rgba(255,255,255,.8);
+    background-color: rgba(255,255,255,0.8);
     width: 50%;
     display: block;
     border-radius: 20px;
