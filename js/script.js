@@ -61,6 +61,9 @@ acertos = 0;
 bloqueia = false;
 ini = undefined
 
+let placar = document.getElementById("stars");
+placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span>';
+
 function joga(p) {
     console.log(bloqueia);
     if (bloqueia) { return; }
@@ -86,6 +89,7 @@ function mostraCarta(p) {
 
 function comparaCartas(j_1, j_2) {
     let carta_1, carta_2;
+    pontuacao(movimentos);
     movimentos++;
     spanMovimentos = document.getElementById('movimentos');
     spanMovimentos.innerHTML = movimentos;
@@ -100,7 +104,6 @@ function comparaCartas(j_1, j_2) {
         carta_2.removeEventListener("click", function (evt) { evt.preventDefault(); });
         bloqueia = false;
     } else {
-        console.log('erroouuuu');
         setTimeout(() => {
             carta_1 = document.getElementById(j_1);
             carta_2 = document.getElementById(j_2);
@@ -109,11 +112,34 @@ function comparaCartas(j_1, j_2) {
             bloqueia = false;
         }, 1500);
     }
-    if (acertos === 8) {
-        alert("Você ganhou!");
+    if (acertos === 8) {      
+        exibePopup(movimentos);
         clearInterval(contaTempo);
     }
     jogada_1 = jogada_2 = undefined;
+}
+
+function pontuacao(mov) {
+    for (let i = 0; i < cartas.length; i++) {
+        if ( mov >= 8  && mov < 12 ) {
+            placar.firstElementChild.remove();
+            placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span><span><i class="far fa-star"></i></span>';
+        } else if ( mov >= 12  && mov < 16 ) {
+            placar.firstElementChild.remove();
+            placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span>';
+        } else if ( mov >= 16 ) {
+            placar.firstElementChild.remove();
+            placar.innerHTML = '<span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span>';
+        };
+    };  
+}
+
+function exibePopup(mov) {
+    document.getElementById("modal").classList.remove("modal_off");
+    document.getElementById("jogadas").innerHTML = mov;
+    // incluir tempo de jogo
+    // incluir numero de estrelas
+    // fazer função do botão replay??
 }
 
 /* Embaralhar cartas - fonte: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array*/
@@ -152,6 +178,23 @@ document.getElementById('reiniciar').addEventListener('click', function(e) {
     ini = undefined;
     spanMovimentos = document.getElementById('movimentos');
     spanMovimentos.innerHTML = movimentos;
+});
+
+// AÇÃO BOTÃO JOGAR NOVAMENTE
+document.getElementById('replay').addEventListener('click', function(e) {
+    for (var l = 0; l < cartas.length; l++) { 
+        cartas[l].classList.remove("pares"); 
+        cartas[l].classList.remove('flip');
+    } 
+    icones = shuffle(icones);
+    jogada_1 = jogada_2 = undefined;
+    movimentos = acertos = 0;
+    var contaTempo = setInterval(myTimer, 1000);
+    document.getElementById("tempo").innerHTML = '00:00:00';
+    ini = undefined;
+    spanMovimentos = document.getElementById('movimentos');
+    spanMovimentos.innerHTML = movimentos;
+    document.getElementById("modal").classList.add("modal_off");
 });
 
 // AÇÃO DE CLICAR NA CARTA

@@ -18,10 +18,8 @@
                 <button type="button" id="reiniciar">Novo Jogo</button>
 
                 <div id="pontuacao">
-                    <p>
-                        <span><i class="fas fa-star"></i></span>
-                        <span><i class="fas fa-star"></i></span>
-                        <span><i class="fas fa-star"></i></span>
+                    <p id="stars">
+                        
                     </p>
 
                     <p><span id="movimentos">0</span> movimentos</p>
@@ -102,9 +100,9 @@
         <div id="modal" class="modal_off">
             <div class="popup">
                 <h1>Parabéns! Você venceu!</h1>
-                <p>Você levou <span class="tempo">XX:XX:XX</span> para ganhar essa rodada.</p>
-                <p>Sua pontuação foi <span class="jogadas">X</span> movimentos.</p>
-                <p>Você ganhou <span class="estrelas">X</span> estrelas.</p>
+                <p>Terminou o jogo em <span id="timer">XX:XX:XX</span>.</p>
+                <p>Realizou <span id="jogadas"></span> movimentos.</p>
+                <p>E ganhou <span id="estrelas">X</span> estrelas.</p>
                 <button type="button" id="replay">Jogar novamente</button>
             </div>
         </div>
