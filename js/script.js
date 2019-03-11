@@ -1,44 +1,3 @@
-/*
-1. Lógica do Jogo da Memória:
-O jogo aleatoriamente embaralha as cartas. Um usuário ganha quando todas as cartas forem correspondidas com sucesso.
-    ao clicar na carta:
-    - definir icone da carta
-    - mostrar icone
-    - clicar na segunda carta
-    - comparar posição da carta com posição do array
-    - se for igual mudar a classe "pares"
-    - desativar clique de cartas "pares"
-    - limitar a duas jogadas por vez
-    - timer para desvirar as cartas
-    - exibir mensagem final de partida
-
-2. Parabéns Popup:
-Quando um usuário vence o jogo, um modal aparece para parabenizar o jogador e perguntar se ele quer jogar novamente.
-Ele também deve informar ao usuário quanto tempo demorou para ganhar o jogo e qual foi a classificação por estrelas.
-
-3. Botão Reiniciar:
-Um botão de reinicialização permite que o jogador redefina o tabuleiro de jogo, o cronômetro e a classificação por estrelas.
-
-4. Classificação por estrelas:
-O jogo exibe uma classificação por estrelas (de 1 a pelo menos 3) que reflete o desempenho do jogador.
-No início de um jogo, ele deve exibir pelo menos 3 estrelas. Depois de alguns movimentos, ele deve mudar
-para uma classificação menor de estrelas. Depois de mais alguns movimentos, ele deve mudar para uma
-classificação de estrelas ainda mais baixa (até 1).
-O número de movimentos necessários para mudar a classificação depende de você, mas isso deve acontecer em algum momento.
-
-5. Cronômetro:
-Quando o jogador inicia um jogo, um temporizador exibido também deve começar. Quando o jogador vence o jogo, o cronômetro para.
-
-6. Mover Contador:
-O jogo exibe o número atual de movimentos que um usuário fez.
-
-Extras:
-- Adicione animações CSS quando os cartões forem clicados, correspondidos sem sucesso e correspondidos com êxito.
-- Adicione funcionalidade exclusiva além dos requisitos mínimos (Implemente um placar, armazene o estado do jogo usando o armazenamento local, etc.)
-- Implemente otimizações adicionais que melhorem o desempenho e a experiência do usuário do jogo (atalhos de teclado para jogabilidade, etc.).
-
-*/
-
 /* Array de icones */
 
 let icones = [ '<i class="fas fa-dove"></i>', '<i class="fas fa-dove"></i>',
@@ -54,14 +13,17 @@ icones = shuffle(icones);
 console.log(icones);
 
 const cartas = document.getElementsByClassName('carta');
-let jogada_1, jogada_2, movimentos, acertos;
+let jogada_1, jogada_2, movimentos, acertos, estrelas;
+
 
 movimentos = 0;
 acertos = 0;
+estrelas = '3 estrelas';
 bloqueia = false;
 ini = undefined
 
-let placar = document.getElementById("stars");
+
+const placar = document.getElementById("stars");
 placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span>';
 
 function joga(p) {
@@ -71,7 +33,7 @@ function joga(p) {
     if (jogada_1 === undefined) {
         jogada_1 = p;
         mostraCarta(p);
-    } else if (jogada_2 === undefined ) {
+    } else if (jogada_2 === undefined && p != jogada_1 ) {
         jogada_2 = p;
         bloqueia = true;
         mostraCarta(p);
@@ -89,8 +51,8 @@ function mostraCarta(p) {
 
 function comparaCartas(j_1, j_2) {
     let carta_1, carta_2;
-    pontuacao(movimentos);
     movimentos++;
+    pontuacao(movimentos);
     spanMovimentos = document.getElementById('movimentos');
     spanMovimentos.innerHTML = movimentos;
     if (icones[j_1] === icones[j_2]) {
@@ -113,33 +75,37 @@ function comparaCartas(j_1, j_2) {
         }, 1500);
     }
     if (acertos === 8) {
-        clearInterval(contaTempo);
-        exibePopup(movimentos);
+        setTimeout(() => {
+            clearInterval(contaTempo);
+            exibePopup(movimentos);
+        }, 1000);
     }
     jogada_1 = jogada_2 = undefined;
 }
 
 function pontuacao(mov) {
-    for (let i = 0; i < cartas.length; i++) {
-        if ( mov >= 8  && mov < 12 ) {
-            placar.firstElementChild.remove();
-            placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span><span><i class="far fa-star"></i></span>';
-        } else if ( mov >= 12  && mov < 16 ) {
-            placar.firstElementChild.remove();
-            placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span>';
-        } else if ( mov >= 16 ) {
-            placar.firstElementChild.remove();
-            placar.innerHTML = '<span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span>';
-        };
-    };  
+    if ( mov > 8 && mov <= 12 ) {
+        placar.firstElementChild.remove();
+        placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span><span><i class="far fa-star"></i></span>';
+        estrelas = '2 estrelas.';
+    } else if ( mov > 12  && mov <= 16 ) {
+        placar.firstElementChild.remove();
+        placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span>';
+        estrelas = '1 estrela.';
+    } else if ( mov > 16 ) {
+        placar.firstElementChild.remove();
+        placar.innerHTML = '<span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span>';
+        estrelas = 0;
+    } else {
+        estrelas = '3 estrelas.';
+    };
 }
 
 function exibePopup(mov) {
     document.getElementById("modal").classList.remove("modal_off");
+    document.getElementById("timer").innerHTML = document.getElementById("tempo").innerHTML;
     document.getElementById("jogadas").innerHTML = mov;
-    // incluir tempo de jogo
-    // incluir numero de estrelas
-    // fazer função do botão replay??
+    document.getElementById("estrelas").innerHTML = estrelas;
 }
 
 /* Embaralhar cartas - fonte: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array*/
@@ -163,39 +129,26 @@ function shuffle(array) {
   return array;
 }
 
-// AÇÃO BOTÃO NOVO JOGO
-document.getElementById('reiniciar').addEventListener('click', function(e) {
-    for (var l = 0; l < cartas.length; l++) { 
-        cartas[l].classList.remove("pares"); 
-        cartas[l].classList.remove('flip');
-    } 
-    icones = shuffle(icones);
-    console.log(icones);
-    jogada_1 = jogada_2 = undefined;
-    movimentos = acertos = 0;
-    var contaTempo = setInterval(myTimer, 1000);
-    document.getElementById("tempo").innerHTML = '00:00:00';
-    ini = undefined;
-    spanMovimentos = document.getElementById('movimentos');
-    spanMovimentos.innerHTML = movimentos;
-});
-
-// AÇÃO BOTÃO JOGAR NOVAMENTE
-document.getElementById('replay').addEventListener('click', function(e) {
-    for (var l = 0; l < cartas.length; l++) { 
+function recomecarJogo() {
+    for (let l = 0; l < cartas.length; l++) { 
         cartas[l].classList.remove("pares"); 
         cartas[l].classList.remove('flip');
     } 
     icones = shuffle(icones);
     jogada_1 = jogada_2 = undefined;
     movimentos = acertos = 0;
-    var contaTempo = setInterval(myTimer, 1000);
+    let contaTempo = setInterval(myTimer, 1000);
     document.getElementById("tempo").innerHTML = '00:00:00';
     ini = undefined;
     spanMovimentos = document.getElementById('movimentos');
     spanMovimentos.innerHTML = movimentos;
     document.getElementById("modal").classList.add("modal_off");
-});
+    placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span>';
+}
+
+// AÇÃO BOTÃO NOVO JOGO E JOGAR NOVAMENTE
+document.getElementById('reiniciar').addEventListener('click', recomecarJogo);
+document.getElementById('replay').addEventListener('click', recomecarJogo);
 
 // AÇÃO DE CLICAR NA CARTA
 for (let i = 0; i < cartas.length; i++) {
@@ -204,18 +157,18 @@ for (let i = 0; i < cartas.length; i++) {
     });
 }
 
-var contaTempo = setInterval(myTimer, 1000);
+let contaTempo = setInterval(myTimer, 1000);
 
 function myTimer() {
     if (ini) {
-        var d = new Date();
-        var t = new Date(d - ini)
+        let d = new Date();
+        let t = new Date(d - ini)
 
-        var hour = t.getUTCHours();
+        let hour = t.getUTCHours();
             hour = ("0" + hour).slice(-2);
-        var min = t.getUTCMinutes();
+        let min = t.getUTCMinutes();
             min = ("0" + min).slice(-2);
-        var sec = t.getUTCSeconds();
+        let sec = t.getUTCSeconds();
             sec = ("0" + sec).slice(-2);
 
         document.getElementById("tempo").innerHTML = hour + ":" + min + ":" + sec;
