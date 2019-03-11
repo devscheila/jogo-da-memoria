@@ -112,9 +112,9 @@ function comparaCartas(j_1, j_2) {
             bloqueia = false;
         }, 1500);
     }
-    if (acertos === 8) {      
-        exibePopup(movimentos);
+    if (acertos === 8) {
         clearInterval(contaTempo);
+        exibePopup(movimentos);
     }
     jogada_1 = jogada_2 = undefined;
 }
