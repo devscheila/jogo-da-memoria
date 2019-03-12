@@ -1,21 +1,16 @@
+'use strict';
+
 /* ARRAY DE ICONES */
-
-let icones = [ '<i class="fas fa-dove"></i>', '<i class="fas fa-dove"></i>',
-    '<i class="fas fa-child"></i>', '<i class="fas fa-child"></i>',
-    '<i class="fas fa-bomb"></i>', '<i class="fas fa-bomb"></i>',
-    '<i class="fas fa-bell"></i>', '<i class="fas fa-bell"></i>',
-    '<i class="fas fa-anchor"></i>', '<i class="fas fa-anchor"></i>',
-    '<i class="fas fa-heart"></i>', '<i class="fas fa-heart"></i>',
-    '<i class="fas fa-umbrella"></i>', '<i class="fas fa-umbrella"></i>',
-    '<i class="fas fa-tooth"></i>', '<i class="fas fa-tooth"></i>'];
-
-icones = shuffle(icones);
+let icones = [ '<i class="fas fa-dove"></i>', '<i class="fas fa-child"></i>', '<i class="fas fa-bomb"></i>', '<i class="fas fa-bell"></i>',
+    '<i class="fas fa-anchor"></i>', '<i class="fas fa-heart"></i>', '<i class="fas fa-umbrella"></i>', '<i class="fas fa-tooth"></i>'];
 
 const cartas = document.getElementsByClassName('carta');
 const placar = document.getElementById("stars");
 const spanMovimentos = document.getElementById('movimentos');
 const tempo = document.getElementById("tempo");
+
 let jogada_1, jogada_2, movimentos, acertos, estrelas, contaTempo, bloqueia, ini;
+let deck = icones.concat(icones);
 
 movimentos = 0;
 acertos = 0;
@@ -23,6 +18,7 @@ estrelas = '3 estrelas';
 bloqueia = false;
 ini = undefined;
 placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span>';
+deck = shuffle(deck);
 
 // AÇÃO DE CLICAR NA CARTA
 for (let i = 0; i < cartas.length; i++) {
@@ -58,7 +54,7 @@ function mostraCarta(p) {
     carta = document.getElementById(p);
     carta.classList.add('flip');
     front = carta.getElementsByClassName("front")[0];
-    front.innerHTML = icones[p];
+    front.innerHTML = deck[p];
 }
 
 // FUNÇÃO PARA COMPARAR AS CARTAS
@@ -67,7 +63,7 @@ function comparaCartas(j_1, j_2) {
     movimentos++;
     pontuacao(movimentos);
     spanMovimentos.innerHTML = movimentos;
-    if (icones[j_1] === icones[j_2]) {
+    if (deck[j_1] === deck[j_2]) {
         acertos++;
         carta_1 = document.getElementById(j_1);
         carta_2 = document.getElementById(j_2);
@@ -90,7 +86,6 @@ function comparaCartas(j_1, j_2) {
         setTimeout(() => {
             clearInterval(contaTempo);
             exibePopup(movimentos);
-            tempo = document.getElementById("tempo").innerHTML;
         }, 1500);
     }
     jogada_1 = jogada_2 = undefined;
@@ -119,7 +114,7 @@ function recomecarJogo() {
         cartas[i].classList.remove("pares"); 
         cartas[i].classList.remove('flip');
     } 
-    icones = shuffle(icones);
+    deck = shuffle(deck);
     jogada_1 = jogada_2 = undefined;
     movimentos = acertos = 0;
     contaTempo = setInterval(myTimer, 1000);
@@ -132,23 +127,18 @@ function recomecarJogo() {
 
 // FUNÇÃO PARA CALCULAR A CLASSIFICAÇÃO POR ESTRELAS
 function pontuacao(mov) {
-    if ( mov > 12 && mov <= 16 ) {
+    if ( mov > 14 && mov <= 20 ) {
         placar.firstElementChild.remove();
         placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="fas fa-star"></i></span><span><i class="far fa-star"></i></span>';
         estrelas = '2 estrelas.';
-    } else if ( mov > 16  && mov <= 22 ) {
+    } else if ( mov > 20 ) {
         placar.firstElementChild.remove();
         placar.innerHTML = '<span><i class="fas fa-star"></i></span><span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span>';
         estrelas = '1 estrela.';
-    } else if ( mov > 22 ) {
-        placar.firstElementChild.remove();
-        placar.innerHTML = '<span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span><span><i class="far fa-star"></i></span>';
-        estrelas = 0;
     } else {
         estrelas = '3 estrelas.';
     }
 }
-
 // FUNÇÃO PARA EXIBIR O POPUP COM A MENSAGEM FINAL 
 function exibePopup(mov) {
     document.getElementById("modal").classList.remove("modal_off");
