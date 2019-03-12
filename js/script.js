@@ -90,6 +90,7 @@ function comparaCartas(j_1, j_2) {
         setTimeout(() => {
             clearInterval(contaTempo);
             exibePopup(movimentos);
+            tempo = document.getElementById("tempo").innerHTML;
         }, 1500);
     }
     jogada_1 = jogada_2 = undefined;
