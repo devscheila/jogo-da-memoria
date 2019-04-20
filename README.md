@@ -4,10 +4,6 @@ Projeto de HTML, CSS e JavaScript, para o ND Fundamentos de Front End.
 
 ### Instruções para baixar o jogo
 
-1. Clique aqui para jogar online: [Jogo da Memória](https://sstihler.github.io/jogo-da-memoria/)
-
-OU
-
 1. Faça o clone deste projeto com `git clone https://github.com/sstihler/jogo-da-memoria.git`.
 
 OU
@@ -19,6 +15,10 @@ OU
 5. Descompacte o arquivo em seu computador e siga os passos a seguir para executar o jogo.
 
 ### Instruções para executar o jogo
+
+1. Clique aqui para jogar online: [Jogo da Memória](https://sstihler.github.io/jogo-da-memoria/)
+
+OU
 
 1. Execute o arquivo `index.html` no navegador de sua preferência.
 
